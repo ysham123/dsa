@@ -14,3 +14,5 @@ class Solution:
                 count += 1
             res = max(res, count)
         return res
+
+#o(nlogn) time, o(n) space
