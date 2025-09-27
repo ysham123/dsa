@@ -7,6 +7,6 @@ class Solution():
             prefix *= nums[x]
         postfix = 1
         for x in range(len(nums) -1,-1,-1):
-            res[x] = postfix
+            res[x] *= postfix
             postfix *= nums[x]
         return res
