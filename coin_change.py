@@ -12,3 +12,4 @@ class Solution():
                     dp[a] = min(dp[a], 1 + dp[a-c])
         return -1 if dp[amount] == INF else dp[amount] 
 #Time:O(n * t), Space:O(t)
+
