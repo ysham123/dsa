@@ -1,0 +1,48 @@
+💡 Scenario: you’re designing a payment API (POST /charge) for a startup. clients (mobile apps, web) may retry requests if the network flakes.
+
+👉 Q:
+
+what are idempotency keys?
+An idempotency key is a unique client-generated token like an uuid sent with a request for example: POST/charge
+-The purpose is to ensure that retires due to network issues or client crashed dont accidentally create duplicate side effectts like charge the customer twice
+-Rule is if the same client sends the same key again, the server should return the same result it gave the frist time.
+
+how do they make retries safe?
+Without idempotency: The client retires -> the server might create duplicate payment records
+
+with idempotency: the client sends the same key in the header ex:idempotency-key:123abc
+The server checks: "Have i seen the key 123abc before?
+--If yes:return stored response
+--If no: process the requesr, save the result against that key
+
+---The retires are safe, becuase they dont recexute the action
+
+what’s the basic flow (server side)?
+1.client sends request with key
+2.server cehcks stores(eg. Redis or DB table idempotency keys)
+3.If key exists with response -> return that response
+4.If key doesnt exist -> process normally, save {key, request_hash, response, sttus}
+5.future identical key + request => serve cached response
+6/ If same key but diffenret boy -> return 409 conflict(client bug)
+what are trade-offs or design choices (storage, TTL, collisions, modified body, scale)?
+
+Storage: 
+redis(fast, ttl for expiry)
+sql/nosql table(durable, but heavier)
+
+TTL(Time To Live):
+keys usaully expire after hours-days(eg. 24-72hr)
+
+Scope:
+Global or per user(per user is safer)
+
+Modified Body:'Must detecct and reject(prevents key re-use with diffenret data)
+
+Scale:
+Hot keys(lots of retires at once) need locking to avoid race conditions
+
+Consistency:
+In multi-region systems, you need repplication(so retires in a different region still see the same key)
+
+Example Analogy:
+Think of idempotency keys like a “receipt number.” If you retry a purchase with the same receipt number, the cashier won’t charge you again — they’ll just show you the receipt you already got.
