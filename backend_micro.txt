@@ -46,3 +46,13 @@ In multi-region systems, you need repplication(so retires in a different region 
 
 Example Analogy:
 Think of idempotency keys like a “receipt number.” If you retry a purchase with the same receipt number, the cashier won’t charge you again — they’ll just show you the receipt you already got.
+
+MOCK:
+“You’re designing a payments API (POST /charge). Clients might retry requests if they lose the response. 
+How would you make sure retries don’t double-charge the user?”
+
+I’d make the API idempotent by requiring clients to send a unique idempotency key with each POST /charge. On the server, 
+I store that key with the request and its response. If a retry comes in with the same key,
+I return the stored response instead of charging again. For fast lookup and expiry
+I could use Redis with TTL, but for long-lived or very large datasets,
+a SQL/NoSQL store is safer, at the cost of higher latency.
