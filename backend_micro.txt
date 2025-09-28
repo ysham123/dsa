@@ -56,3 +56,10 @@ I store that key with the request and its response. If a retry comes in with the
 I return the stored response instead of charging again. For fast lookup and expiry
 I could use Redis with TTL, but for long-lived or very large datasets,
 a SQL/NoSQL store is safer, at the cost of higher latency.
+
+Design a rate limiter for an API service that allows, say, 100 requests per user per minute. How would you build it?
+Id implement this with a toekn bucket in redis. each user has a bucket refilled at a fixed rate for exmaple: 100 tokens per minute. Every
+request consumes one token, and if the bucket is empty the requst is rejected with 429 too many requests.
+Redis is ideal here becuase it supports atomic incrementss and ttls for fast expiry. Comapred to fixed windows,
+this smooths out burts and is production ready. If scaling glovally, id shard buckets across redis nodes and replicate for HA. This ensures
+fairness per user while keeping latency low.
