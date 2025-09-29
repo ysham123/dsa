@@ -5,3 +5,5 @@ class Solution():
             key = "".join(sorted(word))
             store[key].append(word)
         return list(store.values())
+
+        #Time:O(m*nlogn), Space:O(m*n)
