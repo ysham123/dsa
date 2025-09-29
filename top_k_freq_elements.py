@@ -6,7 +6,7 @@ class Solution():
 
         #The better approach
         freq_map = Counter(nums)
-        buckets = [[] for _ in range(len(nums) + 1)]
+        bucket = [[] for _ in range(len(nums) + 1)]
         for num, freq in freq_map.items():
             bucket[freq].append(num)
         res = []
