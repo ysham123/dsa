@@ -12,3 +12,5 @@ class Solution():
             else:
                 r -= 1
         return res
+
+        #Time: O(n), Space:O(1)
