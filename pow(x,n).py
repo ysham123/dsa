@@ -16,10 +16,10 @@ class Solution():
 
         res = 1
         while n > 0:
-            if n % 2 == 1:
+            if n % 2 == 1: # if n is odd
                 res  *= x
-            x *= x
-            n //= 2
+            x *= x #square the base
+            n //= 2 #half the exponent
         return res
 
         
