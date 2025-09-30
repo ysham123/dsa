@@ -1,3 +1,4 @@
+#hard
 import heapq
 
 class MedianFinder:
