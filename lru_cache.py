@@ -35,3 +35,4 @@ class LRUCache:
             lru = self.left.next
             self.remove(lru)
             del self.cache[lru.key]
+#time:o(1), space:o(n)
