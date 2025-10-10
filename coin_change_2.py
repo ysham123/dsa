@@ -9,3 +9,5 @@ class Solution:
             for i in range(coin, amount + 1):
                 dp[i] += dp[i - coin]
         return dp[amount]
+
+        #Time:O(n * a), Space:O(a)
