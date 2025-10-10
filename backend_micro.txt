@@ -80,3 +80,11 @@ combined with idempotency keys so repeated deliveries don’t duplicate side-eff
 Failed deliveries beyond the retry limit would go into a Dead Letter Queue for manual inspection or delayed replay. 
 A typical stack might use Redis for short-term retry scheduling and a Kafka DLQ or SQL table for long-term persistence. 
 This design guarantees reliability without flooding the downstream service or losing events.
+
+
+Design a comment system
+I’d design a comment system around a Comment table keyed by post_id and parent_id to support nesting.
+For scaling, I’d paginate by created_at, cache top comments in Redis, and shard by post ID.
+Moderation uses a flag table with async review, and deletions are soft to maintain thread integrity.
+For reliability, new comments trigger background jobs for notifications and spam checks.
+This approach scales to millions of comments per post while staying consistent and fast.
