@@ -9,3 +9,5 @@ class Solution:
             if len(maxheap) > k:
                 heapq.heappop(maxheap)
         return [[x, y] for (_, x,y) in maxheap]
+
+        #time: O(nlogk), space: O(k)
