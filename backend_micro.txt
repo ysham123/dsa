@@ -63,3 +63,20 @@ request consumes one token, and if the bucket is empty the requst is rejected wi
 Redis is ideal here becuase it supports atomic incrementss and ttls for fast expiry. Comapred to fixed windows,
 this smooths out burts and is production ready. If scaling glovally, id shard buckets across redis nodes and replicate for HA. This ensures
 fairness per user while keeping latency low.
+
+
+Webhook Retries + Dead Letter Queues (DLQ)
+When a system sends webhooks (event notifications, payments, updates), the receiving service might be temporarily down or slow.
+If you simply retry blindly:
+
+You might duplicate side-effects (e.g., charge a card twice).
+
+You could overwhelm the downstream service with repeated failures.
+
+Hence we need a retry system that’s idempotent, safe, and bounded.
+
+In a production webhook system, I’d use an exponential backoff retry policy with a max limit,
+combined with idempotency keys so repeated deliveries don’t duplicate side-effects. 
+Failed deliveries beyond the retry limit would go into a Dead Letter Queue for manual inspection or delayed replay. 
+A typical stack might use Redis for short-term retry scheduling and a Kafka DLQ or SQL table for long-term persistence. 
+This design guarantees reliability without flooding the downstream service or losing events.
