@@ -16,3 +16,5 @@ class Solution:
                 l += 1
             r += 1
         return res
+
+        #T:O(n), S:O(n)
