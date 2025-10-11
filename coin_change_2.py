@@ -1,7 +1,5 @@
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
-        if amount == 0:
-            return 0
         dp = [0] * (amount + 1)
         dp[0] = 1
 
