@@ -9,3 +9,5 @@ class Solution:
                 return i
             left_sum += nums[i]
         return -1
+
+        #Time:O(n), Space:O(1)
