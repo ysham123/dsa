@@ -88,3 +88,10 @@ For scaling, I’d paginate by created_at, cache top comments in Redis, and shar
 Moderation uses a flag table with async review, and deletions are soft to maintain thread integrity.
 For reliability, new comments trigger background jobs for notifications and spam checks.
 This approach scales to millions of comments per post while staying consistent and fast.
+
+Rate limiting prevents users or systems from sending too many requests to a service in a short time.
+The most common approach is the **Token Bucket algorithm**, where each user has a “bucket” 
+that refills tokens at a fixed rate, and each request consumes one token. When the bucket is empty, 
+further requests are rejected (e.g., returning HTTP 429). This ensures fair usage and protects 
+servers from overload. It’s usually implemented with fast storage like **Redis**, which tracks 
+token counts per user with TTL for expiration.
