@@ -95,3 +95,21 @@ that refills tokens at a fixed rate, and each request consumes one token. When t
 further requests are rejected (e.g., returning HTTP 429). This ensures fair usage and protects 
 servers from overload. It’s usually implemented with fast storage like **Redis**, which tracks 
 token counts per user with TTL for expiration.
+
+CACHING:
+Caching is a technique used to store frequently accessed data in fast, temporary memory (like Redis or Memcached) to reduce the number of direct database queries and 
+improve application performance. By keeping popular or recently used data in memory, a cache can serve requests much faster 
+than a traditional database, significantly lowering latency and improving scalability.
+
+There are several common caching patterns. The cache-aside (lazy loading) pattern is the most common, where the application checks the cache first and, on a miss, 
+retrieves data from the database and updates the cache. The read-through pattern lets the cache itself handle loading data on misses automatically. 
+Write-through ensures consistency by writing data to both the cache and the database at the same time, while write-back (lazy write) writes 
+only to the cache and syncs with the database later—this offers speed but risks data loss on failure.
+
+To keep cached data accurate, systems use TTL (Time-To-Live) to automatically expire stale entries, and eviction policies like LRU (Least Recently Used) or LFU (Least Frequently Used) 
+to manage space efficiently. It’s also important to prevent issues like cache stampedes, 
+where many clients request the same data when it expires—this can be mitigated using
+locks, request coalescing, or adding random TTL “jitter.”
+
+In production environments, Redis is widely preferred due to its persistence, advanced data structures, and TTL features,
+while Memcached offers a lightweight, purely in-memory alternative for ephemeral caching.
