@@ -10,3 +10,5 @@ class Solution(object):
             rob1 = rob2
             rob2 = next_rob
         return rob2
+
+        #time:O(n), space:O(1)
