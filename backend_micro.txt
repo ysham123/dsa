@@ -113,3 +113,30 @@ locks, request coalescing, or adding random TTL “jitter.”
 
 In production environments, Redis is widely preferred due to its persistence, advanced data structures, and TTL features,
 while Memcached offers a lightweight, purely in-memory alternative for ephemeral caching.
+
+
+Database Indexing
+
+A database index is a data structure (usually a B-tree or hash table) that improves query performance by allowing faster lookups, sorts, and joins.
+It works like a book index — instead of scanning the whole table, the database can jump directly to the relevant rows using sorted keys or hash mappings.
+
+How it works:
+When an index is created on a column (e.g., `email`), the DB stores a sorted list of values with pointers to the full rows.
+Queries that use that column in a WHERE or JOIN clause can find results in **O(log n)** instead of O(n).
+
+Pros: Faster reads, optimized queries, efficient range lookups
+Cons: Slower writes (updates must modify indexes), extra storage usage
+
+Common types:
+
+B-tree index** – supports range and equality queries (default in SQL)
+Hash index** – faster for exact matches, not for ranges
+Composite index – covers multiple columns (order matters)
+Full-text index – for text search and keyword queries
+
+Ex.
+CREATE INDEX idx_user_email ON users (email);
+
+Key takeaway:
+
+--Indexes accelerate read-heavy workloads by reducing table scans but increase write overhead. Use them strategically on frequently queried columns.
