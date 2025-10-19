@@ -4,6 +4,7 @@ class Sol(object):
         prev = None
 
         while fast is not None and fast.next is not None:
+            prev = slow
             slow = slow.next
             fast = fast.next.next
 
