@@ -140,3 +140,12 @@ CREATE INDEX idx_user_email ON users (email);
 Key takeaway:
 
 --Indexes accelerate read-heavy workloads by reducing table scans but increase write overhead. Use them strategically on frequently queried columns.
+
+
+Caching systems
+Caching stores frequently accessed data in high-speed memory (like Redis or Memcached) to improve application performance and reduce load on slower data sources.
+When a user requests data, the system first checks the cache — if found (cache hit), the data is returned instantly; if not (cache miss), 
+the app fetches it from the database and stores it in the cache for future use. Common strategies include cache-aside (lazy loading), 
+write-through (update cache and DB together), and write-back (write to cache first, then sync to DB). Proper cache design uses TTLs (time-to-live) and eviction 
+policies such as LRU to avoid stale or overflowed data. While caching speeds up reads and improves scalability, it must be balanced carefully 
+to prevent data inconsistency and excessive memory use.
