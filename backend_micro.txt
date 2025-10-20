@@ -149,3 +149,10 @@ the app fetches it from the database and stores it in the cache for future use. 
 write-through (update cache and DB together), and write-back (write to cache first, then sync to DB). Proper cache design uses TTLs (time-to-live) and eviction 
 policies such as LRU to avoid stale or overflowed data. While caching speeds up reads and improves scalability, it must be balanced carefully 
 to prevent data inconsistency and excessive memory use.
+
+Message queues
+
+Message queues enable asynchronous communication between services using a producer–consumer model. A producer sends messages to a queue,
+and consumers process them later, allowing systems to scale and stay resilient. Common tools include RabbitMQ, Kafka, and AWS SQS. 
+MQs decouple services, handle spikes in load, and prevent data loss through persistent queues. They’re key in event-driven architectures where 
+components react to messages rather than direct calls. However, they add operational complexity and must handle retries, ordering, and potential duplicates carefully.
