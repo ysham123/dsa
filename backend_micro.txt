@@ -164,3 +164,9 @@ Common algorithms include Round Robin (equal rotation), Least Connections (lowes
 Load balancers can operate at Layer 4 (TCP) or Layer 7 (HTTP) depending on how deeply they inspect traffic. 
 They improve scalability and fault tolerance but must handle challenges like sticky sessions and avoiding single points of failure. 
 Real-world tools include NGINX, HAProxy, AWS ELB, and Cloudflare.
+
+Content Delivery Networks (CDNs) — Backend Micro
+A CDN is a global network of servers that cache and deliver content closer to users, improving latency, 
+scalability, and reliability. When a user requests a resource, the CDN’s nearest edge node serves it if cached (cache hit); otherwise, 
+it retrieves it from the origin server and caches it for future requests. CDNs reduce server load, prevent bottlenecks, and provide DDoS protection. 
+They use TTLs and versioned URLs for cache invalidation. Common providers include Cloudflare, Akamai, AWS CloudFront, and Fastly.
